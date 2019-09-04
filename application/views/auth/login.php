@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Login | Sangoma Bootstrap Admin Template</title>
+    <title>Catmeet</title>
     <meta name="description" content="">
     <meta name="author" content="Walking Pixels | www.walkingpixels.com">
     <meta name="robots" content="index, follow">
@@ -31,20 +31,26 @@
 
 <!-- Main page container -->
 <section class="container" role="main">
-
+    <?php if ($this->session->flashdata('msg')) {
+        ?>
+        <div class="auto-hide alert alert-danger" role="alert">
+            <strong>Maaf, </strong> <?= $this->session->flashdata('msg') ?>
+        </div>
+        <?php
+    } ?>
     <!-- Login header -->
     <div class="login-logo">
-        <a href="login.html">Sangoma</a>
-        <h1>Welcome to Sangoma</h1>
+        <a href="<?= base_url('login')?>">Catmeet</a>
+        <h1>Selamat Datang di CatMeet</h1>
     </div>
     <!-- /Login header -->
 
     <!-- Login form -->
-    <form method="post" action="<?= base_url("administrator/dashboard")?>">
+    <form method="post" action="<?= base_url('login')?>">
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon"><span class="elusive icon-user"></span></span>
-                <input class="form-control" type="text" placeholder="Enter your name" name="login">
+                <input class="form-control" name = "email" type="text" placeholder="Masukkan Email Kamu">
             </div>
         </div>
         <div class="form-group">
@@ -53,16 +59,17 @@
                 <input class="form-control" type="password" placeholder="Password" name="password">
             </div>
         </div>
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
-        <a class="lost-password" href="lost-password.html">Lost your password?</a>
+        <button class="btn btn-primary btn-lg btn-block" name="submit" type="submit">Login</button>
     </form>
+
     <!-- /Login form -->
 
 </section>
+
 <!-- /Main page container -->
 
 <!-- Bootstrap scripts -->
 <script src="<?=base_url()?>assets/js/bootstrap/bootstrap.min.js"></script>
-
+<script src="<?=base_url()?>assets/js/app.js"></script>
 </body>
 </html>

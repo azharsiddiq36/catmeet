@@ -149,4 +149,5 @@ class KucingController extends GLOBAL_Controller
         parent::alert("msg","Berhasil Menghapus Data !!!");
         redirect("administrator/kucing");
     }
+
 }

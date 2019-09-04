@@ -7,7 +7,7 @@
             parent::__construct();
         }
         public function initTable(){
-            return "tbl_jadwal";
+            return "tbl_penjadwalan";
         }
         public function get_jadwal()
 		{

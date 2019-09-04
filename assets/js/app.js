@@ -95,4 +95,32 @@ $(document).ready(function () {
         });
     });
 });
+$('.dropify').dropify({
+    messages: {
+        default: 'Drag atau drop untuk memilih gambar',
+        replace: 'Ganti',
+        remove:  'Hapus',
+        error:   'error'
+    }
+});
+$(document).ready(function() {
+//    var local = window.location.origin+'/anabul/';
+    var url = "https://api.thecatapi.com/v1/breeds";
+    $.ajax({
+        url:url,
+        headers:{"X-Api-Key":"983e61f8-8451-441c-bc89-2892e634c290"},
+        type : 'GET',
+        dataType:'json',
+        success:function (response) {
+            console.log(response);
+            var hasil = [];
+            for(var i = 0;i<response.length;i++){
+                hasil[i] = response[i].id_napi+"- ("+response[i].nama+")";
+            }
+        },
+        error:function () {
 
+        }
+
+    });
+});

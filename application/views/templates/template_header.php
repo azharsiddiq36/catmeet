@@ -16,6 +16,7 @@
     <link rel='stylesheet' type='text/css' href='<?= base_url()?>assets/css/plugins/prettycheckable/prettyCheckable.css'>
 
     <!-- Styles -->
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>assets/dropify/css/dropify.min.css">
     <link rel="stylesheet" href="<?= base_url()?>assets/css/sangoma-blue.css">
 
     <!-- JS Libs -->
@@ -70,15 +71,14 @@
             <figure>
 
                 <!-- User profile avatar -->
-                <img alt="John Pixel avatar" src="http://placekitten.com/60/60">
+                <img alt="Gambar Profil" src="<?= base_url()?>assets/img/upload/<?= $this->session->userdata['pengguna_foto']?>">
 
                 <!-- User profile info -->
                 <figcaption>
-                    <strong><a href="<?= base_url("administrator/profile")?>">John Pixel</a></strong>
+                    <strong><a href="<?= base_url("administrator/profile")?>"><?= $this->session->userdata['pengguna_nama']?></a></strong>
                     <ul>
-                        <li><a href="<?= base_url("administrator/profile")?>" title="Message inbox">inbox</a></li>
                         <li><a href="<?= base_url("administrator/profile")?>" title="Account settings">settings</a></li>
-                        <li><a href="<?= base_url("administrator/logout")?>" title="Logout">logout</a></li>
+                        <li><a onclick="return confirm('Anda yakin ingin logout?')" href="<?= base_url("administrator/logout")?>" title="Logout">logout</a></li>
                     </ul>
                 </figcaption>
                 <!-- /User profile info -->

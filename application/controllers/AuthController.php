@@ -19,7 +19,7 @@
 		
 		public function login()
 		{
-			$data['title'] = 'Masuk ke Rp Celluler';
+			$data['title'] = 'Masuk ke CatMeet';
 			if (isset($_POST['submit'])){
 				$username = parent::post('email');
 				$password = parent::post('password');
@@ -29,20 +29,13 @@
 				if ($existsStatus > 0)
 				{
 					$sessData = array(
-                        'pengguna_jk' => $existsData['pengguna_jk'],
-                        'pengguna_alamat' => $existsData['pengguna_alamat'],
-                        'pengguna_nomor' => $existsData['pengguna_nomor'],
-                        'pengguna_foto' => $existsData['pengguna_foto'],
-                        'pengguna_email' => $existsData['pengguna_email'],
                         'pengguna_id' => $existsData['pengguna_id'],
 						'pengguna_nama' => $existsData['pengguna_nama'],
 						'pengguna_hak_akses' => $existsData['pengguna_hak_akses'],
-                        'pengguna_status' => $existsData['pengguna_status']
+                        'pengguna_foto' => $existsData['pengguna_foto'],
 					);
                     $this->session->set_userdata($sessData);
-					if ($existsData['pengguna_hak_akses'] == "administrator" ||
-                        $existsData['pengguna_hak_akses'] == "karyawan" ||
-                        $existsData['pengguna_hak_akses'] == "ketua" ){
+					if ($existsData['pengguna_hak_akses'] == "administrator"){
                         redirect(site_url('administrator/dashboard'));
                     }
                     else{

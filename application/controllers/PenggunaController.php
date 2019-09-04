@@ -100,6 +100,17 @@ class PenggunaController extends GLOBAL_Controller
             redirect('profile');
 
         }
+        if (isset($_POST['ubah'])){
+            $password = parent::post('password');
+            $repassword = parent::post('repassword');
+            if ($password == $repassword){
+
+            }
+            else{
+                parent::alert("msg","Pengulangan Kata Sandi Tidak Sesuai");
+                redirect('profile');
+            }
+        }
         else{
             parent::template('pengguna/profile',$data);
         }
