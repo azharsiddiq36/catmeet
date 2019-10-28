@@ -12,6 +12,7 @@ class JadwalController extends GLOBAL_Controller
     {
         parent::__construct();
         $this->load->model('JadwalModel');
+        $this->load->model('PenggunaModel');
     }
     public function index(){
         $data['title'] = "Dashboard";
@@ -19,54 +20,10 @@ class JadwalController extends GLOBAL_Controller
     }
     public function daftar(){
         $data['title'] = "Tabel Jadwal";
-        $data['data'] = parent::model('JadwalModel')->get_jadwal()->result();
+        $data['data'] = parent::model('JadwalModel')->get_jadwal_join()->result();
         parent::template('jadwal/index',$data);
     }
-    //Tambah Jadwal
-    public function tambah(){
-        if(isset($_POST['submit'])){
-            $nama = parent::post("jadwal_nama");
-            $password = parent::post("jadwal_password");
-            $jk = parent::post("jadwal_jk");
-            $email = parent::post("jadwal_email");
-            $hak_akses = parent::post("jadwal_hak_akses");
-            $alamat = parent::post("jadwal_alamat");
-            $nomor = parent::post("jadwal_nomor");
-            $data = array("jadwal_email"=>$email);
-            if (parent::model("JadwalModel")->checkMail($data)->num_rows()<1){
-                $data = array(
-                    "jadwal_status"=>"nonaktif",
-                    "jadwal_foto"=>"user.png",
-                    "jadwal_latitude"=>"0",
-                    "jadwal_longitude"=>"0",
-                    "jadwal_foto_ktp"=>"belum",
-                    "jadwal_provinsi"=>"umum",
-                    "jadwal_kabupaten"=>"umum",
-                    "jadwal_kecamatan"=>"umum",
-                    "jadwal_desa"=>"umum",
-                    "jadwal_nama"=>$nama,
-                    "jadwal_password"=>md5($password),
-                    "jadwal_email" =>$email,
-                    "jadwal_nomor" => $nomor,
-                    "jadwal_alamat" =>$alamat,
-                    "jadwal_hak_akses" =>$hak_akses,
-                    "jadwal_jenis_kelamin"=>$jk
-                );
-                parent::model("JadwalModel")->post_jadwal($data);
-                parent::alert("msg","Berhasil Menambahkan Data !!!");
-                redirect("administrator/jadwal");
-            }
-            else{
-                $data['title'] = "Form Tambah Jadwal";
-                parent::alert("msg","Email Telah Tedaftar !!!");
-                parent::template('jadwal/tambah_jadwal',$data);
-            }
-        }
-        else{
-            $data['title'] = "Form Tambah Jadwal";
-            parent::template('jadwal/tambah_jadwal',$data);
-        }
-    }
+
     public function profile(){
         $data['title'] = "Profile Saya";
         $param = array('jadwal_id'=>$this->session->userdata['jadwal_id']);

@@ -14,8 +14,14 @@
 				'pengguna_password' => $password
 			);
 			return parent::get_object_of_row('tbl_pengguna',$user);
-
 		}
-
+        public function get_by_username($username,$password)
+        {
+            $user = array(
+                'pengguna_username' => $username,
+                'pengguna_password' => $password
+            );
+            return parent::get_object_of_row('tbl_pengguna',$user);
+        }
 
     }

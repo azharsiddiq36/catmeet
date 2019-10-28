@@ -25,8 +25,13 @@
         public function deleteJadwal($data){
             return parent::delete_row($this->initTable(),$data);
         }
-        public function checkMail($data){
-            return parent::get_object_of_row($this->initTable(),$data);
+        public function get_jadwal_join(){
+            $this->db->select('*');
+            $this->db->from($this->initTable());
+            $this->db->join('tbl_pengguna', 'tbl_pengguna.pengguna_id = tbl_penjadwalan.penjadwalan_id_pengaju');
+            //$this->db->where('penjadwalan_id_pengaju',$id);
+            $query = $this->db->get();
+            return $query;
         }
 
     }

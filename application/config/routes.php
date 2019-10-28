@@ -3,12 +3,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	//Pengguna
     $route['administrator/profile'] = 'PenggunaController/profile';
+    $route['administrator/changepassword'] = 'PenggunaController/changepassword';
 	$route['administrator/dashboard'] = 'PenggunaController';
     $route['administrator/pengguna'] = 'PenggunaController/daftar';
     $route['administrator/pengguna/tambah'] = 'PenggunaController/tambah';
     $route['administrator/pengguna/edit/(:any)'] = 'PenggunaController/edit/$1';
     $route['administrator/pengguna/hapus/(:any)'] = 'PenggunaController/delete/$1';
     $route['detail_pengguna'] = 'PenggunaController/detail';
+//    $route['load_data_diri'] = 'PenggunaController/load';
     //Jadwal
     $route['administrator/jadwal'] = 'JadwalController/daftar';
     $route['administrator/jadwal/tambah'] = 'JadwalController/tambah';
@@ -25,26 +27,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     $route['administrator/kontes/tambah'] = 'KontesController/tambah';
     $route['administrator/kontes/accept/(:any)'] = 'KontesController/accept/$1';
     $route['administrator/kontes/tolak/(:any)'] = 'KontesController/tolak/$1';
+    $route['detail_kontes'] = 'KontesController/detail';
     //Kucing
     $route['administrator/kucing'] = 'KucingController/daftar';
     $route['administrator/kucing/tambah'] = 'KucingController/tambah';
     $route['administrator/kucing/edit/(:any)'] = 'KucingController/edit/$1';
     $route['administrator/kucing/hapus/(:any)'] = 'KucingController/delete/$1';
+    //Informasi
+    $route['administrator/informasi'] = 'InformasiController/daftar';
+    $route['administrator/informasi/tambah'] = 'InformasiController/tambah';
+    $route['administrator/informasi/edit/(:any)'] = 'InformasiController/edit/$1';
+    $route['administrator/informasi/hapus/(:any)'] = 'InformasiController/delete/$1';
     //Postingan
     $route['administrator/postingan'] = 'PostinganController/daftar';
     $route['administrator/postingan/tambah'] = 'PostinganController/tambah';
     $route['administrator/postingan/edit/(:any)'] = 'PostinganController/edit/$1';
     $route['administrator/postingan/hapus/(:any)'] = 'PostinganController/delete/$1';
+    $route['detail_komentar'] = 'PostinganController/komentar';
+    $route['detail_report'] = 'PostinganController/report';
     //Toko
     $route['administrator/toko'] = 'TokoController/daftar';
     $route['administrator/toko/tambah'] = 'TokoController/tambah';
     $route['administrator/toko/aktif/(:any)'] = 'TokoController/aktif/$1';
     $route['administrator/toko/nonaktif/(:any)'] = 'TokoController/nonaktif/$1';
-
+    $route['detail_toko'] = 'TokoController/detail';
+    //foto
+//    $route['administrator'] = ''
 	// authentication
+    $route['sendmail'] = 'PenggunaController/sendmail';
 	$route['administrator/logout'] = 'AuthController/logout';
     $route['login'] = 'AuthController/login';
 	$route['default_controller'] = 'AuthController';
 	$route['404_override'] = '';
 	$route['translate_uri_dashes'] = FALSE;
 
+	//email
+	$route['pengguna/validasi/(:any)'] = 'ApiPengguna/validation';
+$route['pengguna/reset/(:any)'] = 'ApiPengguna/reset';
+
+
+	//api
+$route['api/login/pengguna'] = 'ApiPengguna/login';
+$route['api/forget/pengguna'] = 'ApiPengguna/forget';
+$route['api/register/pengguna'] = 'ApiPengguna/register';
+$route['api/validasi/pengguna'] = 'ApiPengguna/checkdatadiri';

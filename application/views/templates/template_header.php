@@ -18,7 +18,6 @@
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>assets/dropify/css/dropify.min.css">
     <link rel="stylesheet" href="<?= base_url()?>assets/css/sangoma-blue.css">
-
     <!-- JS Libs -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="<?= base_url()?>assets/js/libs/jquery.js"><\/script>')</script>
@@ -44,10 +43,6 @@
             })
 
         });
-    </script>
-
-    <script type="text/javascript">
-        var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-22557155-10"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();
     </script>
 </head>
 <body>
@@ -116,8 +111,9 @@
                         <span class="badge">23</span>
                         <ul class="dropdown-menu">
                             <li><a href="<?= base_url('administrator/pengguna')?>"><span class="elusive icon-th-list"></span> Pengguna</a></li>
-                            <li><a href="<?= base_url('administrator/kategori')?>"><span class="elusive icon-align-left"></span> Kategori</a></li>
                             <li><a href="<?= base_url('administrator/kucing')?>"><span class="elusive icon-calendar"></span> Kucing</a></li>
+                            <li><a href="<?= base_url('administrator/kategori')?>"><span class="elusive icon-align-left"></span> Kategori</a></li>
+                            <li><a href="<?= base_url('administrator/informasi')?>"><span class="elusive icon-calendar"></span>Informasi Umum</a></li>
                             <li><a href="<?= base_url('administrator/toko')?>"><span class="elusive icon-graph"></span> Toko(Petshop)</a></li>
                         </ul>
                     </li>

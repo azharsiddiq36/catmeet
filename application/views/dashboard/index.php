@@ -5,7 +5,14 @@
 
         <!-- Multi-level scaffolding example -->
         <div class="col-sm-8">
-
+            <div class="row">
+                <!-- Widget block -->
+                <div class="col-sm-3 col-xs-6">
+                    <a class="data-block widget-block" href="<?= base_url('sendmail')?>">
+                        <span class="widget-icon elusive icon-address-book-alt"></span>
+                        <strong>Kirim Email</strong>
+                    </a>
+                </div>
             <!-- Grid row -->
             <div class="row">
                 <!-- Widget block -->

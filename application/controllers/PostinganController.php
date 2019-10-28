@@ -12,6 +12,8 @@ class PostinganController extends GLOBAL_Controller
     {
         parent::__construct();
         $this->load->model('PostinganModel');
+        $this->load->model('ReportModel');
+        $this->load->model('KomentarModel');
     }
     public function index(){
         $data['title'] = "Dashboard";
@@ -19,7 +21,7 @@ class PostinganController extends GLOBAL_Controller
     }
     public function daftar(){
         $data['title'] = "Tabel Postingan";
-        $data['data'] = parent::model('PostinganModel')->get_postingan()->result();
+        $data['data'] = parent::model('PostinganModel')->get_postingan_join()->result();
         parent::template('postingan/index',$data);
     }
     //Tambah Postingan
@@ -103,50 +105,35 @@ class PostinganController extends GLOBAL_Controller
         else{
             parent::template('postingan/profile',$data);
         }
-
     }
     public function edit(){
+        $data['title'] = "Postingan";
         $id = $this->uri->segment(4);
-        if(isset($_POST['submit'])){
-            $nama = parent::post("postingan_nama");
-            $jk = parent::post("postingan_jk");
-            $email = parent::post("postingan_email");
-            $hak_akses = parent::post("postingan_hak_akses");
-            $alamat = parent::post("postingan_alamat");
-            $nomor = parent::post("postingan_nomor");
-            $data = array(
-                "postingan_nama"=>$nama,
-                "postingan_email" =>$email,
-                "postingan_nomor" => $nomor,
-                "postingan_alamat" =>$alamat,
-                "postingan_hak_akses" =>$hak_akses,
-                "postingan_jenis_kelamin"=>$jk
-            );
-            parent::model("PostinganModel")->editPostingan($id,$data);
-            parent::alert("msg","Berhasil Memperbarui Data !!!");
-            redirect("administrator/postingan");
-        }
-        else{
-            $data['title'] = "Form Edit Postingan";
-            $param = array('postingan_id'=>$id);
-            $data['akses'] = array("administrator","postingan");
-            $data['row'] = parent::model("PostinganModel")->getOne($param);
-            parent::template('postingan/edit_postingan',$data);
-        }
+        $data = array(
+            "postingan_status"=>"aktif",
+        );
+        parent::model("PostinganModel")->editPostingan($id,$data);
+        parent::alert("msg","Berhasil Mengaktifkan Akun !!!");
+        redirect("administrator/postingan");
     }
-    public function detail(){
+    public function komentar(){
         $id = parent::post("postingan_id");
-
-        $param = array("postingan_id"=>$id);
-        $isi = parent::model("PostinganModel")->getOne($param);
+        $isi = parent::model("KomentarModel")->get_komentar_join($id)->result();
+        echo json_encode($isi);
+    }
+    public function report(){
+        $id = parent::post("postingan_id");
+        $isi = parent::model("ReportModel")->get_report_join($id)->result();
         echo json_encode($isi);
     }
     public function delete(){
         $data['title'] = "Postingan";
         $id = $this->uri->segment(4);
-        $data = array("postingan_id"=>$id);
-        parent::model("PostinganModel")->deletePostingan($data);
-        parent::alert("msg","Berhasil Menghapus Data !!!");
+        $data = array(
+            "postingan_status"=>"nonaktif",
+        );
+        parent::model("PostinganModel")->editPostingan($id,$data);
+        parent::alert("msg","Berhasil Menonaktifkan Akun !!!");
         redirect("administrator/postingan");
     }
 }

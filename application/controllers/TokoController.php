@@ -19,7 +19,7 @@ class TokoController extends GLOBAL_Controller
     }
     public function daftar(){
         $data['title'] = "Tabel Toko";
-        $data['data'] = parent::model('TokoModel')->get_toko()->result();
+        $data['data'] = parent::model('TokoModel')->get_toko_join()->result();
         parent::template('toko/index',$data);
     }
     //Tambah Toko
@@ -81,5 +81,11 @@ class TokoController extends GLOBAL_Controller
         parent::model("TokoModel")->editToko($id,$data);
         parent::alert("msg","Berhasil Menonaktifkan Toko !!!");
         redirect("administrator/toko");
+    }
+    public function detail(){
+        $id = parent::post("toko_id");
+        $isi = null;
+        $isi['data'] = parent::model("TokoModel")->get_one_join($id)->row_array();
+        echo json_encode($isi);
     }
 }

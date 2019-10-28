@@ -19,7 +19,7 @@ class KontesController extends GLOBAL_Controller
     }
     public function daftar(){
         $data['title'] = "Tabel Kontes";
-        $data['data'] = parent::model('KontesModel')->get_kontes()->result();
+        $data['data'] = parent::model('KontesModel')->get_kontes_join()->result();
         parent::template('kontes/index',$data);
     }
     //Tambah Kontes
@@ -116,9 +116,9 @@ class KontesController extends GLOBAL_Controller
     }
     public function detail(){
         $id = parent::post("kontes_id");
-
-        $param = array("kontes_id"=>$id);
-        $isi = parent::model("KontesModel")->getOne($param);
+      //  $id = 2;
+        $isi = null;
+        $isi['data'] = parent::model("KontesModel")->get_one_join($id)->row_array();
         echo json_encode($isi);
     }
     public function tolak(){

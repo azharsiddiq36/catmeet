@@ -25,8 +25,22 @@
         public function deleteKontes($data){
             return parent::delete_row($this->initTable(),$data);
         }
-        public function checkMail($data){
-            return parent::get_object_of_row($this->initTable(),$data);
+        public function get_kontes_join(){
+            $this->db->select('*');
+            $this->db->from($this->initTable());
+            $this->db->join('tbl_pengguna', 'tbl_pengguna.pengguna_id = tbl_kontes.kontes_id_pengguna');
+            $this->db->join('tbl_jenis_kontes', 'tbl_jenis_kontes.jenis_kontes_id = tbl_kontes.kontes_jenis');
+            $query = $this->db->get();
+            return $query;
+        }
+        public function get_one_join($id){
+            $this->db->select('*');
+            $this->db->from($this->initTable());
+            $this->db->join('tbl_pengguna', 'tbl_pengguna.pengguna_id = tbl_kontes.kontes_id_pengguna');
+            $this->db->join('tbl_jenis_kontes', 'tbl_jenis_kontes.jenis_kontes_id = tbl_kontes.kontes_jenis');
+            $this->db->where('kontes_id',$id);
+            $query = $this->db->get();
+            return $query;
         }
 
     }

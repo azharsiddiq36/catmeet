@@ -25,8 +25,20 @@
         public function deleteToko($data){
             return parent::delete_row($this->initTable(),$data);
         }
-        public function checkMail($data){
-            return parent::get_object_of_row($this->initTable(),$data);
+        public function get_toko_join(){
+            $this->db->select('*');
+            $this->db->from($this->initTable());
+            $this->db->join('tbl_pengguna', 'tbl_pengguna.pengguna_id = tbl_toko.toko_pengguna_id');
+            $query = $this->db->get();
+            return $query;
+        }
+        public function get_one_join($id){
+            $this->db->select('*');
+            $this->db->from($this->initTable());
+            $this->db->join('tbl_pengguna', 'tbl_pengguna.pengguna_id = tbl_toko.toko_pengguna_id');
+            $this->db->where('toko_id',$id);
+            $query = $this->db->get();
+            return $query;
         }
 
     }

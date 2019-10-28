@@ -15,9 +15,6 @@
                 <div class="dark data-block">
                     <header>
                         <h2><?= $title ?></h2>
-                        <ul class="data-header-actions">
-                            <li><a href="<?= base_url('administrator/penjadwalan/tambah') ?>">Tambah penjadwalan</a></li>
-                        </ul>
                     </header>
                     <section>
                         <table class="datatable table table-striped table-bordered table-hover">
@@ -29,24 +26,24 @@
                                 <th>Pengaju</th>
                                 <th>Penerima</th>
                                 <th>Status</th>
-                                <th>Aksi</th>
+
                             </tr>
                             </thead>
                             <tbody>
                             <?php
                             $no = 1;
                             foreach ($data as $key) {
+                                $param = array("pengguna_id"=>$key->penjadwalan_id_penerima);
+                                $penerima = $this->PenggunaModel->getOne($param);
                                 ?>
                                 <tr class="odd gradeX">
                                     <td><?= $no ?></td>
                                     <td><?= $key->penjadwalan_deskripsi ?></td>
                                     <td><?= $key->penjadwalan_tanggal ?></td>
-                                    <td><?= $key->penjadwalan_id_pengaju ?></td>
-                                    <td><?= $key->penjadwalan_id_penerima ?></td>
+                                    <td><?= $key->pengguna_nama ?></td>
+                                    <td><?= $penerima['pengguna_nama'] ?></td>
                                     <td><?= $key->penjadwalan_status ?></td>
-                                    <td><a href="" class="btn btn-primary btn-sm"><span
-                                                    class="elusive icon-eye-open"></span></a>
-                                    </td>
+
                                 </tr>
                                 <?php
                                 $no++;

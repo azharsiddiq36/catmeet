@@ -22,9 +22,10 @@
 <!-- /Main page footer -->
 
 <!-- Bootstrap scripts -->
-<script src="<?php echo base_url()?>assets/dropify/js/dropify.min.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js"></script>
+<script src="<?= base_url()?>assets/dropify/js/dropify.min.js"></script>
 <script src="<?= base_url()?>assets/js/bootstrap/bootstrap.min.js"></script>
-<script src="<?= base_url()?>assets/js/app.js?t=Date.now()  "></script>
+<script src="<?= base_url()?>assets/js/app.js"></script>
 <script src="<?= base_url()?>assets/js/plugins/flot/jquery.flot.min.js"></script>
 <script src="<?= base_url()?>assets/js/plugins/flot/jquery.flot.resize.min.js"></script>
 <script src="<?= base_url()?>assets/js/plugins/dataTables/jquery.datatables.min.js"></script>
@@ -388,7 +389,8 @@
 </script>
 
 <!-- Wysihtml5 -->
-
+<script src="<?= base_url()?>assets/js/plugins/wysihtml5/wysihtml5-0.3.0.js"></script>
+<script src="<?= base_url()?>assets/js/plugins/wysihtml5/bootstrap-wysihtml5.js"></script>
 <script>
     $(document).ready(function() {
 
