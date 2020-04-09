@@ -22,6 +22,9 @@
         public function editdata_diri($id,$data){
             return parent::update_table($this->initTable(),"data_diri_id",$id,$data);
         }
+        public function editby_pengguna($id,$data){
+            return parent::update_table($this->initTable(),"data_diri_pengguna_id",$id,$data);
+        }
         public function deletedata_diri($data){
             return parent::delete_row($this->initTable(),$data);
         }

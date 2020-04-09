@@ -29,6 +29,15 @@
             $this->db->select('*');
             $this->db->from($this->initTable());
             $this->db->join('tbl_pengguna', 'tbl_pengguna.pengguna_id = tbl_postingan.postingan_id_pengguna');
+            $this->db->order_by('postingan_id','desc');
+            $query = $this->db->get();
+            return $query;
+        }
+        public function get_postingan_join_aktif(){
+            $this->db->select('*');
+            $this->db->from($this->initTable());
+            $this->db->join('tbl_pengguna', 'tbl_pengguna.pengguna_id = tbl_postingan.postingan_id_pengguna');
+            $this->db->order_by('postingan_id','desc');
             $query = $this->db->get();
             return $query;
         }

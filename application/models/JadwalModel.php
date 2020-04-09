@@ -33,5 +33,13 @@
             $query = $this->db->get();
             return $query;
         }
+        public function get_jadwal_by_id($id){
+            $this->db->select('*');
+            $this->db->from($this->initTable());
+            $this->db->where('penjadwalan_id_pengaju',$id);
+            $this->db->or_where('penjadwalan_id_penerima',$id);
+            $query = $this->db->get();
+            return $query;
+        }
 
     }

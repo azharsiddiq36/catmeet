@@ -37,8 +37,25 @@
             $this->db->from($this->initTable());
             $this->db->join('tbl_pengguna', 'tbl_pengguna.pengguna_id = tbl_toko.toko_pengguna_id');
             $this->db->where('toko_id',$id);
+
             $query = $this->db->get();
             return $query;
         }
-
+        public function get_by_pengguna($id){
+            $this->db->select('*');
+            $this->db->from($this->initTable());
+            $this->db->join('tbl_pengguna', 'tbl_pengguna.pengguna_id = tbl_toko.toko_pengguna_id');
+            $this->db->where('toko_pengguna_id',$id);
+            $query = $this->db->get();
+            return $query;
+        }
+        public function get_acc_toko_join(){
+            $this->db->select('*');
+            $this->db->from($this->initTable());
+            $this->db->join('tbl_pengguna', 'tbl_pengguna.pengguna_id = tbl_toko.toko_pengguna_id');
+            $this->db->where('toko_status',"aktif");
+            $this->db->order_by('toko_nama','asc');
+            $query = $this->db->get();
+            return $query;
+        }
     }

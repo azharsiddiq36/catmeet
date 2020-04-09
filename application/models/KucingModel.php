@@ -25,8 +25,11 @@
         public function deleteKucing($data){
             return parent::delete_row($this->initTable(),$data);
         }
-        public function checkMail($data){
-            return parent::get_object_of_row($this->initTable(),$data);
+        public function getByPengguna($id){
+            $this->db->select('*');
+            $this->db->from($this->initTable());
+            $this->db->where('kucing_pengguna_id',$id);
+            $query = $this->db->get();
+            return $query;
         }
-
     }

@@ -23,7 +23,6 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama Pengguna</th>
-                                <th>Kategori</th>
                                 <th>Tanggal</th>
                                 <th>Deskripsi</th>
                                 <th>Status</th>
@@ -42,7 +41,7 @@
                                 <tr class="odd gradeX">
                                     <td><?= $no ?></td>
                                     <td><?= $key->pengguna_nama?></td>
-                                    <td><?= $key->postingan_kategori ?></td>
+
                                     <td><?= date_indo(date("Y-m-d",strtotime($key->postingan_tanggal))) ?></td>
                                     <td><?php
                                         if (strlen($key->postingan_deskripsi) < 40) {

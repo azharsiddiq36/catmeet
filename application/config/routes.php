@@ -63,11 +63,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	//email
 	$route['pengguna/validasi/(:any)'] = 'ApiPengguna/validation';
-$route['pengguna/reset/(:any)'] = 'ApiPengguna/reset';
+    $route['pengguna/reset/(:any)'] = 'ApiPengguna/reset';
 
 
-	//api
-$route['api/login/pengguna'] = 'ApiPengguna/login';
-$route['api/forget/pengguna'] = 'ApiPengguna/forget';
-$route['api/register/pengguna'] = 'ApiPengguna/register';
-$route['api/validasi/pengguna'] = 'ApiPengguna/checkdatadiri';
+	//api pengguna
+    $route['api/login/pengguna'] = 'ApiPengguna/login';
+    $route['api/updatelocation/pengguna'] = 'ApiPengguna/updateLocation';
+    $route['api/forget/pengguna'] = 'ApiPengguna/forget';
+    $route['api/register/pengguna'] = 'ApiPengguna/register';
+    $route['api/validasi/pengguna'] = 'ApiPengguna/checkdatadiri';
+    $route['api/detailaccount/pengguna'] = 'ApiPengguna/getDetailAccount';
+    $route['api/ktp/pengguna'] = 'ApiPengguna/uploadKtp';
+    $route['api/fotodiri/pengguna'] = 'ApiPengguna/uploadFotoDiri';
+    $route['api/update1/pengguna'] = 'ApiPengguna/update1';
+    $route['api/update2/pengguna'] = 'ApiPengguna/update2';
+    //kucing api
+    $route['api/kucing/tambah'] = 'ApiKucing/tambah';
+    $route['api/kucing/mycat'] = 'ApiKucing/myListCat';
+    //pasangan api
+    $route['api/pasangan/tambah'] = 'ApiPasangan/tambah';
+    $route['api/pasangan/list'] = 'ApiPasangan/getList';
+    //chat api
+    $route['api/pesan/getconversation'] = 'ApiPesan/getChat';
+    $route['api/kontak/getkontak'] = 'ApiKontak/getKontak';
+    $route['api/pesan/lastconversation'] = 'ApiPesan/getLastChat';
+    //toko api
+    $route['api/toko/get'] ='ApiToko/getToko';
+    $route['api/toko/tambah'] ='ApiToko/tambah';
+    $route['api/toko/update'] = 'ApiToko/updateToko';
+    $route['api/toko/update1'] = 'ApiToko/updateToko1';
+    $route['api/toko/getlisttoko'] = 'ApiToko/getListToko';
+    //postingan
+    $route['api/postingan/tambah'] = 'ApiPostingan/tambah';
+    $route['api/postingan/get'] = 'ApiPostingan/getPostingan';
+    //komentar
+    $route['api/komentar/tambah'] = 'ApiKomentar/tambah';
+    $route['api/komentar/get'] = 'ApiKomentar/getKomentar';
+    //report
+    $route['api/report/tambah'] = 'ApiReport/tambah';
