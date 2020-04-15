@@ -30,14 +30,13 @@ class ChatModel extends GLOBAL_Model
 
     public function editChat($id, $data)
     {
-        return parent::update_table($this->initTable(), "chat_id", $id, $data);
+        return parent::update_table($this->initTable(), "chatting_id", $id, $data);
     }
 
     public function deleteChat($data)
     {
         return parent::delete_row($this->initTable(), $data);
     }
-
     public function getChat($kontak)
     {
         $this->db->select('*');
@@ -47,10 +46,8 @@ class ChatModel extends GLOBAL_Model
         $query = $this->db->get();
         return $query;
     }
-
     public function getLastChat($kontak)
     {
-
         $this->db->select('*');
         $this->db->from($this->initTable());
         $this->db->where('chatting_kontak_id', $kontak);

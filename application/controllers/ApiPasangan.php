@@ -40,7 +40,8 @@ class ApiPasangan extends CI_Controller
         $kecamatan = $this->input->post("pasangan_kecamatan");
         $desa = $this->input->post("pasangan_desa");
         $kucing = $this->input->post("pasangan_kucing_jenis");
-        $data = $this->PasanganModel->getLocation($kucing,$provinsi,$kabupaten,$kecamatan,$desa);
+        $kab_baru = str_replace("KABUPATEN","",$kabupaten);
+        $data = $this->PasanganModel->getLocation($kucing,$provinsi,$kab_baru,$kecamatan,$desa);
         if ($data->num_rows()>0){
             $response['status'] = 200;
             $response['message'] = "Berhasil Memuat Data";
@@ -48,7 +49,8 @@ class ApiPasangan extends CI_Controller
         }
         else{
             $response['status'] = 403;
-            $response['message'] = "Data Tidak Ditemukan";
+            $response['message'] = "Data Tidak Ditemukan".$provinsi.$kabupaten.$kecamatan.$desa.$kucing;
+
         }
         echo json_encode($response);
     }

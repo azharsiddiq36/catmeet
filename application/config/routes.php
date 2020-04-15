@@ -85,7 +85,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     $route['api/pasangan/list'] = 'ApiPasangan/getList';
     //chat api
     $route['api/pesan/getconversation'] = 'ApiPesan/getChat';
+    $route['api/pesan/check'] = 'ApiPesan/getStatus';
     $route['api/kontak/getkontak'] = 'ApiKontak/getKontak';
+    $route['api/kontak/check'] = 'ApiKontak/checkKontak';
+    $route['api/kontak/addkontak'] = 'ApiKontak/addKontak';
+    $route['api/pesan/addconversation'] = 'ApiPesan/tambahChat';
     $route['api/pesan/lastconversation'] = 'ApiPesan/getLastChat';
     //toko api
     $route['api/toko/get'] ='ApiToko/getToko';
@@ -101,3 +105,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     $route['api/komentar/get'] = 'ApiKomentar/getKomentar';
     //report
     $route['api/report/tambah'] = 'ApiReport/tambah';
+    //message

@@ -16,14 +16,19 @@
 		public function post_kontak($data){
             return parent::insert_data($this->initTable(),$data);
         }
-        public function getOne($param){
-            return parent::get_array_of_row($this->initTable(),$param);
-        }
         public function editKontak($id,$data){
             return parent::update_table($this->initTable(),"kontak_id",$id,$data);
         }
         public function deleteKontak($data){
             return parent::delete_row($this->initTable(),$data);
+        }
+        public function get_one($pengguna1,$pengguna2){
+            $this->db->select("*");
+            $this->db->from("tbl_kontak");
+            $this->db->where("kontak_pengguna_id",$pengguna1);
+            $this->db->where("kontak_pengguna_id2",$pengguna2);
+            $query = $this->db->get();
+            return $query;
         }
         public function getKontak($id){
             $kontak = array($id);
