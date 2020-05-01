@@ -12,6 +12,8 @@ class KontesController extends GLOBAL_Controller
     {
         parent::__construct();
         $this->load->model('KontesModel');
+        $this->load->model('JenisKontesModel');
+        $this->load->library('pdf');
     }
     public function index(){
         $data['title'] = "Dashboard";
@@ -24,87 +26,80 @@ class KontesController extends GLOBAL_Controller
     }
     //Tambah Kontes
     public function tambah(){
+
         if(isset($_POST['submit'])){
             $nama = parent::post("kontes_nama");
-            $password = parent::post("kontes_password");
-            $jk = parent::post("kontes_jk");
-            $email = parent::post("kontes_email");
-            $hak_akses = parent::post("kontes_hak_akses");
-            $alamat = parent::post("kontes_alamat");
-            $nomor = parent::post("kontes_nomor");
-            $data = array("kontes_email"=>$email);
-            if (parent::model("KontesModel")->checkMail($data)->num_rows()<1){
+            $id = $this->session->userdata['pengguna_id'];
+            $p = parent::post("provinsi");
+            $kab = parent::post("kabupaten");
+            $kec = parent::post("kecamatan");
+            $des = parent::post("desa");
+            $provinsi = explode('@',$p);
+            $desa = explode('@',$des);
+            $kabupaten = explode('@',$kab);
+            $kecamatan = explode('@',$kec);
+            $nomor = parent::post("nomor");
+            $jenis = parent::post("kontes_jenis");
+            $kuota = parent::post("kuota");
+            $durasi = parent::post("durasi");
+            $biaya = parent::post("biaya");
+            $status = "menunggu";
+            $description = parent::post("description");
+            $details = parent::post("details");
+            $lokasi = parent:: post("lokasi");
+            $tanggal = parent::post("tanggal");
+
+            $config['upload_path'] = './assets/img/upload/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $config['max_size'] = 204800;
+            $this->upload->initialize($config);
+            if (!$this->upload->do_upload('foto')) {
+                $error = array('error' => $this->upload->display_errors());
+                var_dump($error);
+            } else {
+                $config['image_library'] = 'gd2';
+                $config['source_image'] = './assets/img/upload/' . $this->upload->data('file_name');
+                $config['create_thumb'] = FALSE;
+                $config['maintain_ratio'] = FALSE;
+                $config['quality'] = '50%';
+                $config['width'] = 1024;
+                $config['height'] = 768;
+                $config['new_image'] = './assets/img/upload/' . $this->upload->data('file_name');
+                $this->load->library('image_lib', $config);
+                $this->image_lib->resize();
+                $foto = $this->upload->data('file_name');
                 $data = array(
-                    "kontes_status"=>"nonaktif",
-                    "kontes_foto"=>"user.png",
-                    "kontes_latitude"=>"0",
-                    "kontes_longitude"=>"0",
-                    "kontes_foto_ktp"=>"belum",
-                    "kontes_provinsi"=>"umum",
-                    "kontes_kabupaten"=>"umum",
-                    "kontes_kecamatan"=>"umum",
-                    "kontes_desa"=>"umum",
-                    "kontes_nama"=>$nama,
-                    "kontes_password"=>md5($password),
-                    "kontes_email" =>$email,
+                    "kontes_nama" => $nama,
+                    "kontes_lokasi" => $lokasi,
+                    "kontes_provinsi" => $provinsi[1],
+                    "kontes_kabupaten" => $kabupaten[1],
+                    "kontes_kecamatan" => $kecamatan[1],
+                    "kontes_desa" => $desa[1],
+                    "kontes_description" => $description,
+                    "kontes_jenis" => $jenis,
+                    "kontes_details" => $details,
+                    "kontes_kuota" => $kuota,
+                    "kontes_tanggal_mulai" => Date('Y-m-d', strtotime($tanggal)),
+                    "kontes_tanggal_selesai" => Date('Y-m-d', strtotime($tanggal . ' ' . ($durasi - 1) . ' days')),
+                    "kontes_status" => $status,
+                    "kontes_biaya" => $biaya,
+                    "kontes_jumlah_pemesan" => 0,
                     "kontes_nomor" => $nomor,
-                    "kontes_alamat" =>$alamat,
-                    "kontes_hak_akses" =>$hak_akses,
-                    "kontes_jenis_kelamin"=>$jk
-                );
-                parent::model("KontesModel")->post_kontes($data);
-                parent::alert("msg","Berhasil Menambahkan Data !!!");
-                redirect("administrator/kontes");
+                    "kontes_foto" =>$foto,
+                    "kontes_pengaju_id" => $id,
+            );
             }
-            else{
-                $data['title'] = "Form Tambah Kontes";
-                parent::alert("msg","Email Telah Tedaftar !!!");
-                parent::template('kontes/tambah_kontes',$data);
-            }
+            parent::model("KontesModel")->post_kontes($data);
+            parent::alert("msg","Berhasil Menambahkan Data !!!");
+            redirect("administrator/kontes");
         }
         else{
+            $data['jenis'] = parent::model("JenisKontesModel")->get_kontes();
             $data['title'] = "Form Tambah Kontes";
             parent::template('kontes/tambah_kontes',$data);
         }
     }
-    public function profile(){
-        $data['title'] = "Profile Saya";
-        $param = array('kontes_id'=>$this->session->userdata['kontes_id']);
-        $data['data'] =  parent::model("KontesModel")->getOne($param);
-        if (isset($_POST['submit'])){
-            $nama = parent::post("nama");
-            $nomor = parent::post("nomor");
-            $email = parent::post("email");
-            $password = parent::post("password");
-            $alamat = parent::post("alamat");
-            $param = null;
-            if($password == $data['data']['kontes_password']){
-                $param = array(
-                    "kontes_nama"=>$nama,
-                    "kontes_email" =>$email,
-                    "kontes_nomor" => $nomor,
-                    "kontes_alamat" =>$alamat,
-                  );
-            }
-            else{
-                $param = array(
-                    "kontes_nama"=>$nama,
-                    "kontes_email" =>$email,
-                    "kontes_nomor" => $nomor,
-                    "kontes_alamat" =>$alamat,
-                    "kontes_password"=>md5($password)
-                );
-            }
-            parent::model("KontesModel")->editKontes($this->session->userdata['kontes_id'],$param);
-            parent::alert("msg","Berhasil Merubah Profile");
-            redirect('profile');
 
-        }
-        else{
-            parent::template('kontes/profile',$data);
-        }
-
-    }
     public function accept(){
         $id = $this->uri->segment(4);
             $data = array(
@@ -129,5 +124,81 @@ class KontesController extends GLOBAL_Controller
         parent::model("KontesModel")->editKontes($id,$data);
         parent::alert("msg","Berhasil Menolak Kontes !!!");
         redirect("administrator/kontes");
+    }
+    function cetak(){
+        $id = $this->uri->segment(3);
+        $kontes = $this->KontesModel->get_one_join($id)->row_array();
+        $pembayaran = $this->KontesModel->get_pembayaran($kontes['kontes_id']);
+        $namabulan = null;
+
+        $pdf = new FPDF('p','mm','A4');
+        // membuat halaman baru
+        $pdf->AddPage();
+        // setting jenis font yang akan digunakan
+        $pdf->Cell(10,7,'',0,1);
+        $pdf->Cell(10,7,'',0,1);
+        $pdf->SetFont('times','B',16);
+        // mencetak string
+        $pdf->Cell(190,7,'Laporan '.$kontes['kontes_nama'],0,1,'C');
+        $pdf->SetFont('times','',12);
+        $pdf->Cell(10,7,'',0,1);
+        $pdf->Cell(10,7,'',0,1);
+        // Memberikan space kebawah agar tidak terlalu rapat
+        $pdf->Cell(10,7,'Penyelenggara           : '.$kontes['pengguna_nama'], 0,1);
+        $pdf->Cell(10,7,'Lokasi                        : '.$kontes['kontes_provinsi'].", ".$kontes['kontes_kabupaten'].", ".
+            $kontes['kontes_kecamatan'].", ".$kontes["kontes_desa"].", ".$kontes['kontes_lokasi'],0,1);
+        $pdf->Cell(10,7,'Tanggal Mulai           : '.date_indo($kontes['kontes_tanggal_mulai']), 0,1);
+        $pdf->Cell(10,7,'Tanggal Selesai         : '.date_indo($kontes['kontes_tanggal_selesai']), 0,1);
+        $pdf->Cell(10,7,'Harga Tiket                 : Rp. '.$kontes['kontes_biaya'], 0,1);
+        $pdf->Cell(10,7,'',0,1);
+        //$pdf->MultiCell(190,7,'Adalah '.strtoupper($id_user['nama']).' sebagai penjamin dari Narapidana '.strtoupper($napi['nama']).' yang sedang sedang menjalani pidana dilapas/Rutan Pekanbaru memberikan pernyataan apabila yang bersangkutan mendapatkan izin yang bersifat khusus maupun Assimilasi Cuti Menjelang Bebas (CMB), Cuti Bersyarat (CB) dan Pembebasan bersyarat dan Pembebasan Bersyarat (PB) maka :',0,'J',0,15);
+        $pdf->SetFont('times','B',14);
+        $pdf->Cell(10,7,'Deskripsi', 0,1);
+        $pdf->SetFont('times','',12);
+        $pdf->SetX(20);$pdf->MultiCell(190,7,''.$kontes['kontes_description']);
+        $pdf->SetFont('times','B',14);
+        $pdf->Cell(10,7,'Rincian', 0,1);
+        $pdf->SetFont('times','',12);
+        $pdf->SetX(20);$pdf->MultiCell(190,7,''.$kontes['kontes_details']);
+
+        $pdf->Cell(190,7,'Riwayat Pembayaran',0,1,'C');
+
+        $header = array(
+            array("label"=>"No", "length"=>10, "align"=>"C"),
+            array("label"=>"Nama Pembayar", "length"=>70, "align"=>"C"),
+            array("label"=>"Tanggal", "length"=>30, "align"=>"C"),
+            array("label"=>"Jenis", "length"=>30, "align"=>"C"),
+            array("label"=>"Jumlah", "length"=>50, "align"=>"C"));
+
+        //tabel
+        $pdf->SetFont('times','','10');
+        $pdf->SetFillColor(0,0,0);
+        $pdf->SetTextColor(255);
+        $pdf->SetDrawColor(128,0,0);
+        foreach ($header as $kolom) {
+            $pdf->Cell($kolom['length'], 5, $kolom['label'], 1, '0', $kolom['align'], true);
+        }
+        $pdf->Ln();
+        $pdf->SetFillColor(224,235,255);
+        $pdf->SetTextColor(0);
+        $pdf->SetFont('');
+        $number = 1;
+        $total = 0;
+        foreach ($pembayaran->result_array() as $d){
+            $header = array(
+                array("label"=>$number, "length"=>10, "align"=>"L"),
+                array("label"=>$d['pengguna_nama'], "length"=>70, "align"=>"L"),
+                array("label"=>date_indo(date("Y-m-d",strtotime($d['pembayaran_tanggal']))), "length"=>30, "align"=>"R"),
+                array("label"=>$d['pembayaran_jenis'], "length"=>30, "align"=>"C"),
+                array("label"=>"Rp. ".$d['pembayaran_jumlah'], "length"=>50, "align"=>"R"));
+            $number++;
+            foreach ($header as $kolom) {
+                $pdf->Cell($kolom['length'], 5, $kolom['label'], 1, '0', $kolom['align'], true);
+            }
+            $pdf->Ln();
+            $total += $d['pembayaran_jumlah'];
+        }
+        $pdf->Cell(190,7,'Total Pembayaran : Rp. '.$total,0,1,'R');
+        $pdf->Output();
     }
 }

@@ -1,4 +1,124 @@
 $(document).ready(function () {
+    var url = "http://dev.farizdotid.com/api/daerahindonesia/provinsi";
+    $.ajax({
+        url: url,
+        type: 'GET',
+        async: true,
+        dataType: 'json',
+        success: function (response) {
+            var html = "<option value='0'>--Pilih Provinsi --</option>";
+            var i;
+            for(i=0; i<response['semuaprovinsi'].length; i++){
+                var value = response['semuaprovinsi'][i]['id']+"@"+response['semuaprovinsi'][i]['nama'];
+
+                html += '<option value="'+value+'">'+response['semuaprovinsi'][i]['nama']+'</option>';
+            }
+            $('#provinsi').html(html);
+        },
+        error: function () {
+
+        }
+
+    });
+    $('#provinsi').change(function(){
+        var id=$(this).val();
+
+        if (id != 0 ){
+            var pecah = id.split("@");
+
+            var url = "http://dev.farizdotid.com/api/daerahindonesia/provinsi/"+pecah[0]+"/kabupaten";
+            $.ajax({
+                url: url,
+                type: 'GET',
+                async: true,
+                dataType: 'json',
+                success: function (response) {
+                    var html = "<option value='0'>--Pilih Kabupaten --</option>";
+                    var i;
+                    for(i=0; i<response['kabupatens'].length; i++){
+                        var value = response['kabupatens'][i]['id']+"@"+response['kabupatens'][i]['nama'];
+                        html += '<option value="'+value+'">'+response['kabupatens'][i]['nama']+'</option>';
+                    }
+                    $('#kabupaten').html(html);
+                },
+                error: function () {
+
+                }
+
+            });
+        return false;
+        }
+        else{
+            var html = "<option value='0'>--Pilih Kabupaten --</option>";
+            $('#kabupaten').html(html);
+        }
+    });
+    $('#kabupaten').change(function(){
+        var id=$(this).val();
+        if (id != 0 ){
+            var pecah = id.split("@");
+            var url = "https://dev.farizdotid.com/api/daerahindonesia/provinsi/kabupaten/"+pecah[0]+"/kecamatan";
+            $.ajax({
+                url: url,
+                type: 'GET',
+                async: true,
+                dataType: 'json',
+                success: function (response) {
+                    var html = "<option value='0'>--Pilih Kecamatan --</option>";
+                    var i;
+                    for(i=0; i<response['kecamatans'].length; i++){
+                        var value = response['kecamatans'][i]['id']+"@"+response['kecamatans'][i]['nama'];
+                        html += '<option value="'+value+'">'+response['kecamatans'][i]['nama']+'</option>';
+                    }
+
+                    $('#kecamatan').html(html);
+                },
+                error: function () {
+
+                }
+
+            });
+            return false;
+        }
+        else{
+            var html = "<option value='0'>--Pilih Kecamatan --</option>";
+            $('#kecamatan').html(html);
+        }
+    });
+    $('#kecamatan').change(function(){
+        var id=$(this).val();
+        if (id != 0 ){
+            console.log(id);
+            var pecah = id.split("@");
+            var url = "http://dev.farizdotid.com/api/daerahindonesia/provinsi/kabupaten/kecamatan/"+pecah[0]+"/desa";
+            $.ajax({
+                url: url,
+                type: 'GET',
+                async: true,
+                dataType: 'json',
+                success: function (response) {
+                    var html = "<option value='0'>--Pilih Desa --</option>";
+                    var i;
+                    for(i=0; i<response['desas'].length; i++){
+                        var value = response['desas'][i]['id']+"@"+response['desas'][i]['nama'];
+                        html += '<option value="'+value+'">'+response['desas'][i]['nama']+'</option>';
+                    }
+                    $('#desa').html(html);
+                },
+                error: function () {
+
+                }
+
+            });
+            return false;
+        }
+        else{
+            var html = "<option value='0'>--Pilih Desa/Kelurahan --</option>";
+            $('#desa').html(html);
+        }
+    });
+});
+$(document).ready(function () {
     $('.detail').click(function (event) {
         var local = window.location.origin + '/anabul/';
         var url = local + "detail_pengguna";
@@ -60,11 +180,11 @@ $(document).ready(function () {
             data: {"kontes_id": data},
             success: function (response) {
                 console.log(response);
-                $('#penyelenggara').html(response['data'].pengguna_nama);
                 $('#kuota').html(response['data'].kontes_kuota);
                 $('#deskripsi').html(response['data'].kontes_details);
                 $('#pemesanan').html(response['data'].kontes_jumlah_pemesan);
                 $('#tgl_mulai').html(response['data'].kontes_tanggal_mulai);
+                $('#lokasi').html(response['data'].kontes_lokasi);
                 $('#tgl_selesai').html(response['data'].kontes_tanggal_selesai);
                 $('#foto').html("<img class = 'img-rounded' style='width: 100%;height: auto;' src='"+local+"/assets/img/upload/"+response['data'].kontes_foto+"'>");
                 $('#nama').html(response['data'].kontes_nama);
@@ -227,4 +347,5 @@ $(document).ready(function () {
 
         });
     });
+
 

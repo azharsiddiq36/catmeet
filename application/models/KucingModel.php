@@ -32,4 +32,12 @@
             $query = $this->db->get();
             return $query;
         }
+        public function get_by_cat_name($id,$name){
+            $this->db->select('*');
+            $this->db->from($this->initTable());
+            $this->db->where('kucing_nama',$name);
+            $this->db->where('kucing_pengguna_id',$id);
+            $query = $this->db->get();
+            return $query;
+        }
     }

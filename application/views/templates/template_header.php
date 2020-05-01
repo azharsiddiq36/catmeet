@@ -131,6 +131,13 @@
                     <li>
                         <a href="<?= base_url("administrator/jadwal")?>"><span class="elusive icon-info-sign"></span> Penjadwalan</a>
                     </li>
+                    <li class="dropdown">
+                        <a href="index.html#" class="dropdown-toggle" data-toggle="dropdown"><span class="elusive icon-file"></span> Kontes <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?= base_url("administrator/kontes")?>"><span class="elusive icon-file"></span> Kontes</a></li>
+                            <li><a href="<?= base_url("administrator/jeniskontes")?>"><span class="elusive icon-file"></span> Jenis Kontes</a></li>
+                        </ul>
+                    </li>
                 </ul>
                 <!-- /Navigation items -->
 

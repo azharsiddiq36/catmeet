@@ -71,4 +71,17 @@ class ApiKucing extends CI_Controller
 
         echo json_encode($response);
     }
+    public function getCat(){
+        $response = null;
+        $id = $this->input->post("kucing_id");
+        $param = array("kucing_id"=>$id);
+        $data = $this->KucingModel->getOne($param);
+
+            $response['status'] = 200;
+            $response['message'] = "Berhasil Memuat Data";
+            $response['data'] = $data;
+
+
+        echo json_encode($response);
+    }
 }

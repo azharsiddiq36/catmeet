@@ -20,7 +20,7 @@
             return parent::get_array_of_row($this->initTable(),$param);
         }
         public function editJadwal($id,$data){
-            return parent::update_table($this->initTable(),"jadwal_id",$id,$data);
+            return parent::update_table($this->initTable(),"penjadwalan_id",$id,$data);
         }
         public function deleteJadwal($data){
             return parent::delete_row($this->initTable(),$data);
@@ -34,12 +34,17 @@
             return $query;
         }
         public function get_jadwal_by_id($id){
+            $user = array($id);
             $this->db->select('*');
             $this->db->from($this->initTable());
-            $this->db->where('penjadwalan_id_pengaju',$id);
-            $this->db->or_where('penjadwalan_id_penerima',$id);
+
+            $this->db->where_in('penjadwalan_id_penerima',$user);
+            $this->db->or_where_in('penjadwalan_id_pengaju',$user);
+            $this->db->order_by('penjadwalan_tanggal','asc');
+
             $query = $this->db->get();
             return $query;
         }
+
 
     }
