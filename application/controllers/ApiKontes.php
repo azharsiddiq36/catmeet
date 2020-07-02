@@ -7,6 +7,7 @@ class ApiKontes extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('JenisKontesModel');
         $this->load->model('PenggunaModel');
         $this->load->model('KontesModel');
         $this->load->model('KucingModel');
@@ -30,7 +31,7 @@ class ApiKontes extends CI_Controller
         $status = "menunggu";
         $description = $this->input->post("description");
         $details = $this->input->post("details");
-        $lokasi = parent:: post("lokasi");
+        $lokasi = $this->input->post("lokasi");
         $tanggal = $this->input->post("tanggal");
 
         $config['upload_path'] = './assets/img/upload/';
@@ -97,6 +98,23 @@ class ApiKontes extends CI_Controller
 
         echo json_encode($response);
     }
+    public function getmylistkontes(){
+        $response = null;
+        $pengguna_id = $this->input->post("pengguna_id");
+        $status = $this->input->post("status");
+        $data = $this->KontesModel->get_kontes_by_id($pengguna_id,$status);
+        if ($data->num_rows()>0){
+            $response['status'] = 200;
+            $response['message'] = "Berhasil Memuat Data";
+            $response['data'] = $data->result_array();
+            $response['total'] = count($data->result_array());
+        }
+        else{
+            $response['status'] = 403;
+            $response['message'] = "Data Tidak Ditemukan";
+        }
+        echo json_encode($response);
+    }
     public function detail(){
         $response = null;
         $id = $this->input->post('id');
@@ -154,5 +172,35 @@ class ApiKontes extends CI_Controller
         }
         echo json_encode($response);
     }
+    public function getJenisKontes(){
+        $response = null;
+        $data = $this->JenisKontesModel->get_kontes();
+        if ($data->num_rows()>0){
+            $response['status'] = 200;
+            $response['message'] = "Berhasil memuat data";
+            $response['data'] = $data->result_array();
+        }
+        else{
+            $response['status'] = 403;
+            $response['message'] = 'Data belum tersedia';
+        }
+        echo json_encode($response);
+    }
+    public function getmyorder(){
+        $response = null;
+        $id=$this->input->post('id');
+        $data = $this->KontesModel->get_by_id($id);
+        if ($data->num_rows()>0){
+            $response['status'] = 200;
+            $response['message']="Berhasil Memuat Data";
+            $response = $data->result_array();
+        }
+        else{
+            $response['status'] = 403;
+            $response['message']="Pemesanan belum ada";
+        }
+        echo json_encode($response);
+    }
+
     
 }

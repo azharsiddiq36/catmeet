@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Catmeet</title>
+    <title>Couple Cat</title>
     <meta name="description" content="">
     <meta name="author" content="Walking Pixels | www.walkingpixels.com">
     <meta name="robots" content="index, follow">
@@ -40,8 +40,8 @@
     } ?>
     <!-- Login header -->
     <div class="login-logo">
-        <a href="<?= base_url('login')?>">Catmeet</a>
-        <h1>Selamat Datang di CatMeet</h1>
+        <a href="<?= base_url('login')?>">Couple Cat</a>
+        <h1>Selamat Datang di Couple Cat</h1>
     </div>
     <!-- /Login header -->
 

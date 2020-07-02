@@ -82,5 +82,26 @@
             $query = $this->db->get();
             return $query;
         }
+        public function get_kontes_by_id($id,$status){
+            $this->db->select('*');
+            $this->db->from($this->initTable());
+            $this->db->join('tbl_pengguna', 'tbl_pengguna.pengguna_id = tbl_kontes.kontes_pengaju_id');
+            $this->db->join('tbl_jenis_kontes', 'tbl_jenis_kontes.jenis_kontes_id = tbl_kontes.kontes_jenis');
+            $this->db->where('kontes_pengaju_id',$id);
+            if($status !=null){
+                $this->db->where('kontes_status',$status);
+            }
+            $query = $this->db->get();
+            return $query;
+        }
+        public function getmylist($id){
+            $this->db->select('*');
+            $this->db->from($this->initTable());
+            $this->db->where('kontes_pengaju_id',$id);
+            $this->db->where('kontes_status','disetujui');
+            $query = $this->db->get();
+            return $query;
+        }
+
 
     }

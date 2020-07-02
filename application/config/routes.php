@@ -118,6 +118,7 @@ $route['api/jadwal/acc'] = 'ApiPenjadwalan/accJadwal';
 $route['api/jadwal/reject'] = 'ApiPenjadwalan/rejectJadwal';
 
 //api kontes
+$route['api/kontes/getjenis'] = 'ApiKontes/getJenisKontes';
 $route['api/kontes/add'] = 'ApiKontes/tambah';
 $route['api/kontes/get'] = 'ApiKontes/getListKontes';
 $route['api/kontes/detail'] = 'ApiKontes/detail';
@@ -126,4 +127,20 @@ $route['api/kontes/mytiket'] = 'ApiKontes/tiket';
 $route['api/kontes/getpreview'] = 'ApiKontes/preview';
 $route['api/kontes/pesan'] = 'ApiKontes/pesan';
 $route['api/kontes/bayar'] = 'ApiKontes/bayar';
+$route['api/kontes/mylist'] = 'ApiKontes/getmylistkontes';
 
+//api pemesanan
+$route['api/pemesanan/add'] = 'ApiPemesanan/tambah';
+$route['api/pemesanan/getorder'] = 'ApiPemesanan/getmyorder';
+$route['api/pemesanan/getone'] = 'ApiPemesanan/getoneorder';
+
+//api pembayaran
+$route['api/pembayaran/add'] = 'ApiPembayaran/tambah';
+$route['api/pembayaran/getmypayment'] = 'ApiPembayaran/getmylist';
+
+//api saldo
+$route['api/saldo/getmycontest'] = 'ApiSaldo/getmycontest';
+$route['api/saldo/add'] = 'ApiSaldo/tambah';
+$route['api/saldo/tarik'] = 'ApiSaldo/tariksaldo';
+$route['api/saldo/transfer'] = 'ApiSaldo/transfer';
+$route['api/saldo/totalsaldokontes'] = 'ApiSaldo/totalsaldo';
