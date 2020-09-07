@@ -49,7 +49,31 @@ class ApiPengguna extends CI_Controller
         }
         echo json_encode($responses);
     }
+    public function kambing(){
+        $this->load->library('email');
 
+        $config['protocol']    = 'smtp';
+        $config['smtp_host']    = 'ssl://smtp.gmail.com';
+        $config['smtp_port']    = '465';
+        $config['smtp_timeout'] = '7';
+        $config['smtp_user']    = 'couplecatofficial@gmail.com';
+        $config['smtp_pass']    = 'mengejarsarjana';
+        $config['charset']    = 'utf-8';
+        $config['newline']    = "\r\n";
+        $config['mailtype'] = 'text'; // or html
+        $config['validation'] = TRUE; // bool whether to validate email or not
+
+        $this->email->initialize($config);
+
+        $this->email->from('couplecatofficial@gmail.com', 'sender_name');
+        $this->email->to('azharsiddiq36@gmail.com');
+        $this->email->subject('Email Test');
+        $this->email->message('Testing the email class.');
+
+        $this->email->send();
+
+        echo $this->email->print_debugger();
+    }
     public function register()
     {
         $response = null;
@@ -89,7 +113,6 @@ class ApiPengguna extends CI_Controller
                 $this->email->initialize($config);
                 $this->email->from($from_email, 'Couple Cat');
                 $this->email->to($email);
-                //$this->email->attach('https://masrud.com/content/images/20181215150137-codeigniter-smtp-gmail.png');
                 $this->email->subject('Verifikasi Akun');
                 $this->email->message("Halo " . $nama . " Terimakasih Telah Melakukan Pendaftaran, <br><br> Harap Klik <strong>
                     <a href='" . base_url('pengguna/validasi/' . $username) . "' target='_blank' rel='noopener'>disini</a></strong> Untuk Mengaktifkan Akun Kamu");
@@ -115,6 +138,7 @@ class ApiPengguna extends CI_Controller
                     $responses['message'] = "Berhasil Melakukan Pendaftaran, Harap Cek Email Untuk Verifikasi Akun";
                 } else {
                     $responses['status'] = 500;
+
                     $responses['message'] = "Terjadi Kesalahan";
                 }
             }

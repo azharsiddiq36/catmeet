@@ -25,12 +25,20 @@
         public function deletePengisian($data){
             return parent::delete_row($this->initTable(),$data);
         }
+        public function getAllJoin(){
+            $this->db->select('*');
+            $this->db->from($this->initTable());
+            $this->db->join('tbl_pengguna', 'tbl_pengguna.pengguna_id = tbl_pengisian.pengisian_pengaju_id');
+            $this->db->order_by('pengisian_id','desc');
+            $query = $this->db->get();
+            return $query;
+        }
         public function getByPengguna($id){
 
             $this->db->select('*');
             $this->db->from($this->initTable());
-            $this->db->where('pengisian_pengguna_id',$id);
-            $this->db->join('tbl_pengguna', 'tbl_pengguna.pengguna_id = tbl_pengisian.pengisian_pengguna_id');
+            $this->db->where('pengisian_pengaju_id',$id);
+            $this->db->join('tbl_pengguna', 'tbl_pengguna.pengguna_id = tbl_pengisian.pengisian_pengaju_id');
             $this->db->order_by('pengisian_id','desc');
             $query = $this->db->get();
             return $query;

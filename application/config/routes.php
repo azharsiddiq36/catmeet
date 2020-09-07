@@ -56,6 +56,10 @@ $route['administrator/toko/tambah'] = 'TokoController/tambah';
 $route['administrator/toko/aktif/(:any)'] = 'TokoController/aktif/$1';
 $route['administrator/toko/nonaktif/(:any)'] = 'TokoController/nonaktif/$1';
 $route['detail_toko'] = 'TokoController/detail';
+//saldo
+$route['administrator/pengisian/accept/(:any)'] = 'PengisianController/accept/$1';
+$route['administrator/pengisian/tolak/(:any)'] = 'PengisianController/tolak/$1';
+$route['administrator/pengisian'] = 'PengisianController/index';
 //foto
 //    $route['administrator'] = ''
 // authentication
